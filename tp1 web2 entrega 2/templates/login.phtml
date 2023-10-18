@@ -1,0 +1,24 @@
+<?php require 'templates/header.phtml' ?>
+
+<div>
+    <form method="POST" action="autenti">
+        <div>
+            <label for="usuario">Usuario</label>
+            <input type="usuario" required  id="usuario" name="usuario" aria-describedby="userHelp">
+        </div>
+        <div>
+            <label for="password">Contraseña</label>
+            <input type="password" required id="contraseña" name="contraseña">
+        </div>
+
+        <?php if ($error) : ?>
+            <div  role='alert'>
+                <?= $error ?>
+            </div>
+        <?php endif ?>
+
+        <button type="submit">Ingresar</button>
+    </form>
+</div>
+
+<?php require 'templates/footer.phtml' ?>

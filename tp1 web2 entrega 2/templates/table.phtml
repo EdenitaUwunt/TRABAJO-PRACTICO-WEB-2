@@ -1,0 +1,49 @@
+<?php require_once "templates/header.phtml"; ?>
+
+<h1>Noticias de Twitch</h1>
+
+<?php
+if (!isset($_SESSION['twitch_usuario'])) {
+    require 'templates/form_noticia.phtml';
+}
+?>
+
+<!-- Acceso al público -->
+<table>
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Cuerpo</th>
+
+            <?php if (!isset($_SESSION['twitch_usuario'])) : ?>
+                <th></th>
+            <?php endif; ?>
+        </tr>
+    </thead>
+
+    <tbody>
+        <?php foreach ($noticias as $noticia) : ?>
+            <tr  <?php if ($noticia->finalizada) : ?> finalizar <?php endif ?>">
+
+                <td><?= $noticia->titulo_noticia ?></td>
+                <td><?= $noticia->autor_noticia ?></td>
+                <td><?= $noticia->cuerpo_noticia ?></td>
+
+                <!-- Acceso limitado para editar/eliminar noticias -->
+                <?php if (!isset($_SESSION['twitch_usuario'])) : ?>
+                    <td>
+                        <?php if (!$noticia->finalizada) : ?>
+                            <a href="finalizar/<?php echo $noticia->id_noticia ?>" type="button">Editada</a>
+                        <?php endif; ?>
+                        <a href="eliminar/<?php echo $noticia->id_noticia ?>" type="button">Borrar</a>
+                    </td>
+                <?php endif; ?>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+<p><small>Mostrando <?= $count ?> Noticias</small></p>
+
+<?php require 'templates/footer.phtml' ?>

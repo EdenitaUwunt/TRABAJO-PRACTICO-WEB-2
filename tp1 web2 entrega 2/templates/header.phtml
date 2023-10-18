@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <base href="<?= BASE_URL ?>">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Noticias de Twitch</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div>
+                <a  href="">Noticias de Twitch</a>
+                <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span ></span>
+                </button>
+                <div id="navbarNav">
+                    <ul>
+                        <li>
+                            <a aria-current="page" href="">Tabla de Inscriptos</a>
+                        </li>
+                        <li>
+                            <a aria-current="page" href="history">Historia</a>
+                        </li>
+    <?php if (!isset($_SESSION['twitch_usuario'])) : ?>
+                            <li>
+                                <a aria-current="page" href="login">Login</a>
+                            </li>
+                        <?php else : ?>
+                            <li>
+                                <a aria-current="page" href="logout">Logout (<?= $_SESSION['twitch_usuario'] ?>) </a>
+                            </li>
+                        <?php endif ?>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div>
+            <?php
+            // Conexión a la data base
+            $servidor_bd = "127.0.0.1";
+            $usuario_bd = "tu_usuario";
+            $contrasena_bd = "tu_contraseña";
+            $nombre_bd = "dbweb2";
+
+            $conexion_bd = new mysqli($servidor_bd, $usuario_bd, $contrasena_bd, $nombre_bd);
+
+            if ($conexion_bd->connect_error) {
+                die("Error de conexión: " . $conexion_bd->connect_error);
+            }
+
+            // Consulta SQL para las obtener noticias 
+            $sql = "SELECT * FROM noticias";
+            $resultado = $conexion_bd->query($sql);
+
+            if ($resultado->num_rows > 0) {
+                // Mostrar datos de la tabla de noticias 
+                while ($fila = $resultado->fetch_assoc()) {
+                    echo '<div>';
+                    echo '<h3>ID de Usuario: ' . $fila['id_usuario'] . '</h3>';
+                    echo '<p>Noticia 1: ' . $fila['noticia_1'] . '</p>';
+                    echo '<p>Noticia 2: ' . $fila['noticia_2'] . '</p>';
+                    echo '<p>Noticia 3: ' . $fila['noticia_3'] . '</p>';
+                    echo '</div>';
+                }
+            } else {
+                echo "No hay noticias disponibles";
+            }
+
+            $conexion_bd->close();
+            ?>
+        </div>
+    </main>
+
+   
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<form action="agregar" method="POST">
+    <div>
+        <div>
+            <div>
+                <label>Título Noticia</label>
+                <input required name="titulo_noticia" type="text">
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <label>Autor</label>
+                <select required name="autor_noticia" type="text">
+                <div>
+                <label>Juego o Categoría de Twitch</label>
+                <select required name="juego_twitch">
+                    <option value="Minecraft">Minecraft</option>
+                    <option value="Just Chatting">Just Chatting</option>
+                    <option value="League of Legends">League of Legends</option>
+                    <option value="Fortnite">Fortnite</option>
+                    <option value="Among Us">Among Us</option>
+                    <option value="Valorant">Valorant</option>
+                    <option value="Call of Duty: Warzone">Call of Duty: Warzone</option>
+           
+        </select>
+    </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <label>Descripción</label>
+        <textarea required name="cuerpo_noticia" rows="5"></textarea>
+    </div>
+
+    <button type="submit">Publicar Noticia</button>
+</form>
